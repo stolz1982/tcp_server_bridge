@@ -5,9 +5,20 @@ echo "Creating TCP Server Bridge Directory"
 rm -rf $TCP_SERVER_BRIDGE_DIR
 mkdir $TCP_SERVER_BRIDGE_DIR
 
-echo "Copy the necessary files"
+echo "Copy the python file"
 cp ./$TCP_SERVER_BRIDGE_FILE $TCP_SERVER_BRIDGE_DIR
+
+
+echo "Create and copy ESD CFG File"
+touch ./$TCP_SERVER_BRIDGE_CFG
+echo "esdIP=$TCP_SERVER_BRIDGE_CFG_ESD_IP" >> ./$TCP_SERVER_BRIDGE_CFG
+echo "pathABC=$TCP_SERVER_BRIDGE_CFG_ESD_DIR" >> ./$TCP_SERVER_BRIDGE_CFG
+echo "port=$TCP_SERVER_BRIDGE_CFG_ESD_PORT" >> ./$TCP_SERVER_BRIDGE_CFG
+echo "retries=$TCP_SERVER_BRIDGE_CFG_ESD_RETRIES" >> ./$TCP_SERVER_BRIDGE_CFG
 cp ./$TCP_SERVER_BRIDGE_CFG $TCP_SERVER_BRIDGE_DIR
+
+
+
 
 echo "Creating the service user"
 useradd -r -s /bin/false $TCP_SERVER_BRIDGE_USER
