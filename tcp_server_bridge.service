@@ -4,11 +4,11 @@ After=syslog.target
 
 [Service]
 Type=simple
-User=tcpserverbridgeuser
-Group=tcpserverbridgeuser
-WorkingDirectory=/etc/tcp_server_bridge
-ExecStart=/etc/tcp_server_bridge/pyserver.py
-SyslogIdentifier=tcpserverbridge
+User=$TCP_SERVER_BRIDGE_USER
+Group=$TCP_SERVER_BRIDGE_USER
+WorkingDirectory=$TCP_SERVER_BRIDGE_DIR
+ExecStart=$TCP_SERVER_BRIDGE_DIR/$TCP_SERVER_BRIDGE_FILE
+SyslogIdentifier=$SYSLOGID
 StandardOutput=syslog
 StandardError=syslog
 Restart=always
