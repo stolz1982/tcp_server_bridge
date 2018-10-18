@@ -1,6 +1,18 @@
 #!/bin/bash
 source ./tcp_server_bridge.cfg
 
+echo "Creating TCP Server Bridge Directory"
+rm -rf $TCP_SERVER_BRIDGE_DIR
+mkdir $TCP_SERVER_BRIDGE_DIR
+
+echo "Copy the necessary files"
+cp ./$TCP_SERVER_BRIDGE_FILE $TCP_SERVER_BRIDGE_DIR
+cp ./$TCP_SERVER_BRIDGE_CFG $TCP_SERVER_BRIDGE_DIR
+
+echo "Creating the service user"
+useradd -r -s /bin/false $TCP_SERVER_BRIDGE_USER
+chown -R $TCP_SERVER_BRIDGE_USER:$TCP_SERVER_BRIDGE_USER $TCP_SERVER_BRIDGE_DIR
+
 echo "Creating the service file"
 rm -f $TCP_SERVER_BRIDGE_SERVICE
 touch $TCP_SERVER_BRIDGE_SERVICE
@@ -24,4 +36,15 @@ echo "" >> $TCP_SERVER_BRIDGE_SERVICE
 echo "[Install]" >> $TCP_SERVER_BRIDGE_SERVICE
 echo "WantedBy=multi-user.target" >> $TCP_SERVER_BRIDGE_SERVICE
 
+echo ""
+echo "Installation done"
+echo ""
+echo "enabling and starting the service: systemctl enable $SYSLOGID && systemctl start $SYSLOGID"
+systemctl enable $SYSLOGID
+systemctl start $SYSLOGID
 
+echo "Service status:"
+systemctl status $SYSLOGID
+
+
+echo "Finish"
