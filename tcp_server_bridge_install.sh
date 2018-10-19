@@ -3,6 +3,13 @@ source ./tcp_server_bridge.cfg
 
 systemctl stop $SYSLOGID
 
+echo "checking path of python 3"
+PYTHON3_PATH=$( which python3 )
+if [ $? -ne 0 ]; then
+  echo "no Python3 found on the system"
+  exit 1;
+ fi
+
 echo "Creating TCP Server Bridge Directory"
 rm -rf $TCP_SERVER_BRIDGE_DIR
 mkdir $TCP_SERVER_BRIDGE_DIR
@@ -40,7 +47,7 @@ echo "Type=simple" >> $SERVICE_FILE
 echo "User=$TCP_SERVER_BRIDGE_USER" >> $SERVICE_FILE
 echo "Group=$TCP_SERVER_BRIDGE_USER" >> $SERVICE_FILE
 echo "WorkingDirectory=$TCP_SERVER_BRIDGE_DIR" >> $SERVICE_FILE
-echo "ExecStart=$TCP_SERVER_BRIDGE_DIR/$TCP_SERVER_BRIDGE_FILE" >> $SERVICE_FILE
+echo "ExecStart=$PYTHON3_PATH $TCP_SERVER_BRIDGE_DIR/$TCP_SERVER_BRIDGE_FILE" >> $SERVICE_FILE
 echo "SyslogIdentifier=$SYSLOGID" >> $SERVICE_FILE
 echo "StandardOutput=syslog" >> $SERVICE_FILE
 echo "StandardError=syslog" >> $SERVICE_FILE
@@ -54,6 +61,7 @@ echo ""
 echo "Installation done"
 echo ""
 echo "enabling and starting the service: systemctl enable $SYSLOGID && systemctl start $SYSLOGID"
+systemctl daemon-reload
 systemctl enable $SYSLOGID
 systemctl start $SYSLOGID
 
