@@ -1,6 +1,8 @@
 #!/bin/bash
 source ./tcp_server_bridge.cfg
 
+systemctl stop $SYSLOGID
+
 echo "Creating TCP Server Bridge Directory"
 rm -rf $TCP_SERVER_BRIDGE_DIR
 mkdir $TCP_SERVER_BRIDGE_DIR
