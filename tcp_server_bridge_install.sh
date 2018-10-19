@@ -25,27 +25,28 @@ useradd -r -s /bin/false $TCP_SERVER_BRIDGE_USER
 chown -R $TCP_SERVER_BRIDGE_USER:$TCP_SERVER_BRIDGE_USER $TCP_SERVER_BRIDGE_DIR
 
 echo "Creating the service file"
-rm -f $TCP_SERVER_BRIDGE_SERVICE
-touch $TCP_SERVER_BRIDGE_SERVICE
+SERVICE_FILE=$TCP_SERVER_BRIDGE_SERVICE_DIR/$SYSLOGID.service
+rm -f $SERVICE_FILE
+touch $SERVICE_FILE
 
-echo "[Unit]" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "Description=Tevin TCP Server Bridge" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "After=syslog.target" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "[Service]" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "Type=simple" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "User=$TCP_SERVER_BRIDGE_USER" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "Group=$TCP_SERVER_BRIDGE_USER" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "WorkingDirectory=$TCP_SERVER_BRIDGE_DIR" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "ExecStart=$TCP_SERVER_BRIDGE_DIR/$TCP_SERVER_BRIDGE_FILE" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "SyslogIdentifier=$SYSLOGID" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "StandardOutput=syslog" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "StandardError=syslog" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "Restart=always" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "RestartSec=3" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "[Install]" >> $TCP_SERVER_BRIDGE_SERVICE
-echo "WantedBy=multi-user.target" >> $TCP_SERVER_BRIDGE_SERVICE
+echo "[Unit]" >> $SERVICE_FILE
+echo "Description=Tevin TCP Server Bridge" >> $SERVICE_FILE
+echo "After=syslog.target" >> $SERVICE_FILE
+echo "" >> $SERVICE_FILE
+echo "[Service]" >> $SERVICE_FILE
+echo "Type=simple" >> $SERVICE_FILE
+echo "User=$TCP_SERVER_BRIDGE_USER" >> $SERVICE_FILE
+echo "Group=$TCP_SERVER_BRIDGE_USER" >> $SERVICE_FILE
+echo "WorkingDirectory=$TCP_SERVER_BRIDGE_DIR" >> $SERVICE_FILE
+echo "ExecStart=$TCP_SERVER_BRIDGE_DIR/$TCP_SERVER_BRIDGE_FILE" >> $SERVICE_FILE
+echo "SyslogIdentifier=$SYSLOGID" >> $SERVICE_FILE
+echo "StandardOutput=syslog" >> $SERVICE_FILE
+echo "StandardError=syslog" >> $SERVICE_FILE
+echo "Restart=always" >> $SERVICE_FILE
+echo "RestartSec=3" >> $SERVICE_FILE
+echo "" >> $SERVICE_FILE
+echo "[Install]" >> $SERVICE_FILE
+echo "WantedBy=multi-user.target" >> $SERVICE_FILE
 
 echo ""
 echo "Installation done"
